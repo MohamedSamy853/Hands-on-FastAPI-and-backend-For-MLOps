@@ -1,0 +1,17 @@
+[project]
+name = "2-orm-and-auth"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "MohamedSamy853", email = "mohamed.samy.2248369@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = []
+
+[project.scripts]
+2-orm-and-auth = "2_orm_and_auth:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"

@@ -1,0 +1,42 @@
+[project]
+name = "fastapi-session"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "MohamedSamy853", email = "mohamed.samy.2248369@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "aiofiles>=25.1.0",
+    "bcrypt==4.0.1",
+    "cryptography>=50.0.1",
+    "fastapi>=0.141.1",
+    "httpx>=0.28.1",
+    "jinja2>=3.1.6",
+    "openai>=3.11.0",
+    "passlib>=1.7.4",
+    "psycopg2-binary>=2.9.12",
+    "pymysql>=1.2.0",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "python-jose>=3.5.0",
+    "python-multipart>=0.0.32",
+    "slowapi>=0.1.10",
+    "sqlalchemy>=2.0.52",
+    "uvicorn>=0.52.4",
+]
+
+[project.scripts]
+fastapi-session = "fastapi_session:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv.workspace]
+members = [
+    "1-basics-http-methods",
+    "2-orm-and-auth",
+    "3-rate-limiting",
+]

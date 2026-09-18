@@ -1,0 +1,17 @@
+[project]
+name = "1-basics-http-methods"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "MohamedSamy853", email = "mohamed.samy.2248369@gmail.com" }
+]
+requires-python = ">=3.13"
+dependencies = []
+
+[project.scripts]
+1-basics-http-methods = "1_basics_http_methods:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"

@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FastAPI WebSocket Streaming</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background: #f4f6f8;
+
+            color: #222;
+
+        }
+
+
+        .container {
+
+            max-width: 850px;
+
+            margin: 50px auto;
+
+            padding: 30px;
+
+            background: white;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        h1 {
+
+            margin-top: 0;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .description {
+
+            color: #666;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        label {
+
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        select,
+        textarea {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        textarea {
+
+            height: 120px;
+
+            resize: vertical;
+
+        }
+
+
+        .endpoint {
+
+            padding: 10px;
+
+            background: #f3f4f6;
+
+            border-radius: 6px;
+
+            margin-bottom: 20px;
+
+            font-size: 13px;
+
+            color: #555;
+
+        }
+
+
+        .buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        button {
+
+            padding: 11px 18px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+        }
+
+
+        #streambtn {
+
+            background: #2563eb;
+
+            color: white;
+
+        }
+
+
+        #closebtn {
+
+            background: #dc2626;
+
+            color: white;
+
+        }
+
+
+        #clearbtn {
+
+            background: #e5e7eb;
+
+            color: #222;
+
+        }
+
+
+        button:hover {
+
+            opacity: 0.9;
+
+        }
+
+
+        .status {
+
+            margin-bottom: 10px;
+
+            font-size: 14px;
+
+        }
+
+
+        #status {
+
+            font-weight: bold;
+
+        }
+
+
+        #container {
+
+            min-height: 250px;
+
+            max-height: 450px;
+
+            overflow-y: auto;
+
+            padding: 20px;
+
+            background: #111827;
+
+            color: white;
+
+            border-radius: 8px;
+
+            white-space: pre-wrap;
+
+            line-height: 1.6;
+
+            font-family: Consolas, monospace;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <h1>
+        FastAPI WebSocket Streaming
+    </h1>
+
+
+    <div class="description">
+
+        Simple streaming demo using
+        WebSocket, Ollama and vLLM.
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- BACKEND SELECTION -->
+    <!-- ========================= -->
+
+    <label for="endpoint">
+
+        Select Streaming Backend
+
+    </label>
+
+
+    <select id="endpoint">
+
+        <option value="/ws/text">
+
+            Text Streaming
+
+        </option>
+
+
+        <option value="/ws/ollama">
+
+            Ollama
+
+        </option>
+
+
+        <option value="/ws/vllm">
+
+            vLLM
+
+        </option>
+
+    </select>
+
+
+    <!-- ========================= -->
+    <!-- WEBSOCKET URL -->
+    <!-- ========================= -->
+
+    <div class="endpoint">
+
+        WebSocket URL:
+
+        <span id="endpointDisplay">
+
+            ws://127.0.0.1:8000/ws/text
+
+        </span>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- PROMPT -->
+    <!-- ========================= -->
+
+    <label for="messageInput">
+
+        Enter your prompt
+
+    </label>
+
+
+    <textarea
+        id="messageInput"
+        placeholder="Enter your message..."
+    >Explain machine learning in simple words.</textarea>
+
+
+    <!-- ========================= -->
+    <!-- BUTTONS -->
+    <!-- ========================= -->
+
+    <div class="buttons">
+
+
+        <button id="streambtn">
+
+            Start Streaming
+
+        </button>
+
+
+        <button id="closebtn">
+
+            Close Connection
+
+        </button>
+
+
+        <button id="clearbtn">
+
+            Clear Output
+
+        </button>
+
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- STATUS -->
+    <!-- ========================= -->
+
+    <div class="status">
+
+        Status:
+
+        <span id="status">
+
+            Disconnected
+
+        </span>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- OUTPUT -->
+    <!-- ========================= -->
+
+    <div id="container">
+
+        Response will appear here...
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+    /*
+    ========================================
+    Configuration
+    ========================================
+    */
+
+    const WS_BASE_URL =
+        "ws://127.0.0.1:8000";
+
+
+    /*
+    ========================================
+    DOM Elements
+    ========================================
+    */
+
+    const endpoint =
+        document.getElementById("endpoint");
+
+
+    const endpointDisplay =
+        document.getElementById(
+            "endpointDisplay"
+        );
+
+
+    const streamButton =
+        document.getElementById(
+            "streambtn"
+        );
+
+
+    const closeButton =
+        document.getElementById(
+            "closebtn"
+        );
+
+
+    const clearButton =
+        document.getElementById(
+            "clearbtn"
+        );
+
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    const output =
+        document.getElementById(
+            "container"
+        );
+
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    /*
+    ========================================
+    WebSocket variable
+    ========================================
+    */
+
+    let ws = null;
+
+
+    /*
+    ========================================
+    Update endpoint display
+    ========================================
+    */
+
+    endpoint.addEventListener(
+        "change",
+        function () {
+
+            const url =
+                WS_BASE_URL +
+                endpoint.value;
+
+
+            endpointDisplay.textContent =
+                url;
+
+
+            /*
+            Close the old connection
+            */
+
+            if (ws) {
+
+                ws.close();
+
+                ws = null;
+
+            }
+
+
+            /*
+            Connect to the new endpoint
+            */
+
+            connectWebSocket();
+
+        }
+    );
+
+
+    /*
+    ========================================
+    Connect WebSocket
+    ========================================
+    */
+
+    function connectWebSocket() {
+
+
+        const url =
+            WS_BASE_URL +
+            endpoint.value;
+
+
+        console.log(
+            "Connecting to:",
+            url
+        );
+
+
+        ws = new WebSocket(url);
+
+
+        /*
+        Connection opened
+        */
+
+        ws.onopen = function () {
+
+
+            console.log(
+                "WebSocket connection opened"
+            );
+
+
+            status.textContent =
+                "Connected";
+
+
+        };
+
+
+        /*
+        Receive messages
+        */
+
+        ws.onmessage = function (event) {
+
+
+            console.log(
+                "Received:",
+                event.data
+            );
+
+
+            /*
+            Check if streaming finished
+            */
+
+            if (
+                event.data === "[DONE]"
+            ) {
+
+
+                status.textContent =
+                    "Completed";
+
+
+                return;
+
+            }
+
+
+            /*
+            Add streamed chunk
+            to the output
+            */
+
+            output.textContent +=
+                event.data;
+
+
+            /*
+            Scroll to bottom
+            */
+
+            output.scrollTop =
+                output.scrollHeight;
+
+        };
+
+
+        /*
+        Connection closed
+        */
+
+        ws.onclose = function () {
+
+
+            console.log(
+                "WebSocket connection closed"
+            );
+
+
+            status.textContent =
+                "Disconnected";
+
+
+        };
+
+
+        /*
+        Connection error
+        */
+
+        ws.onerror = function (error) {
+
+
+            console.error(
+                "WebSocket error:",
+                error
+            );
+
+
+            status.textContent =
+                "Connection Error";
+
+
+        };
+
+    }
+
+
+    /*
+    ========================================
+    Send Prompt
+    ========================================
+    */
+
+    streamButton.addEventListener(
+        "click",
+        function () {
+
+
+            const prompt =
+                input.value.trim();
+
+
+            /*
+            Validate prompt
+            */
+
+            if (!prompt) {
+
+
+                alert(
+                    "Please enter a prompt."
+                );
+
+
+                return;
+
+            }
+
+
+            /*
+            Check WebSocket connection
+            */
+
+            if (
+                !ws ||
+                ws.readyState !==
+                WebSocket.OPEN
+            ) {
+
+
+                alert(
+                    "WebSocket is not connected."
+                );
+
+
+                return;
+
+            }
+
+
+            /*
+            Clear previous response
+            */
+
+            output.textContent = "";
+
+
+            /*
+            Update status
+            */
+
+            status.textContent =
+                "Streaming...";
+
+
+            /*
+            Send prompt to FastAPI
+            */
+
+            ws.send(prompt);
+
+
+        }
+    );
+
+
+    /*
+    ========================================
+    Close Connection
+    ========================================
+    */
+
+    closeButton.addEventListener(
+        "click",
+        function () {
+
+
+            if (ws) {
+
+
+                ws.close();
+
+
+                ws = null;
+
+
+            }
+
+
+            status.textContent =
+                "Disconnected";
+
+
+        }
+    );
+
+
+    /*
+    ========================================
+    Clear Output
+    ========================================
+    */
+
+    clearButton.addEventListener(
+        "click",
+        function () {
+
+
+            output.textContent =
+                "Response will appear here...";
+
+
+        }
+    );
+
+
+    /*
+    ========================================
+    Initial Connection
+    ========================================
+    */
+
+    connectWebSocket();
+
+
+</script>
+
+
+</body>
+
+</html>

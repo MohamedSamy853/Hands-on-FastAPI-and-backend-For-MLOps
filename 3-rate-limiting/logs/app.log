@@ -1,0 +1,50 @@
+2026-09-12 18:41:03,641 | INFO | api | REQUEST | id=39586ebc-2fc2-485c-b993-c3d14c09177b | method=GET | path=/ | client=127.0.0.1
+2026-09-12 18:41:03,642 | INFO | api | RESPONSE | id=39586ebc-2fc2-485c-b993-c3d14c09177b | method=GET | path=/ | status=200 | time=0.0012s
+2026-09-12 18:42:10,852 | INFO | api | REQUEST | id=8d1cbbe5-a67f-4e3f-ae75-a1953cd7fae7 | method=GET | path=/ | client=127.0.0.1
+2026-09-12 18:42:10,853 | INFO | api | RESPONSE | id=8d1cbbe5-a67f-4e3f-ae75-a1953cd7fae7 | method=GET | path=/ | status=200 | time=0.0012s
+2026-09-12 22:41:50,812 | INFO | api | REQUEST | id=d814e3a9-cac8-401b-b3f7-759dec3242e0 | method=GET | path=/ | client=127.0.0.1
+2026-09-12 22:41:50,814 | INFO | api | RESPONSE | id=d814e3a9-cac8-401b-b3f7-759dec3242e0 | method=GET | path=/ | status=200 | time=0.0013s
+2026-09-12 22:41:55,087 | INFO | api | REQUEST | id=3a647276-9e48-44af-9d67-6e215d60bfa7 | method=GET | path=/docs | client=127.0.0.1
+2026-09-12 22:41:55,087 | INFO | api | RESPONSE | id=3a647276-9e48-44af-9d67-6e215d60bfa7 | method=GET | path=/docs | status=200 | time=0.0004s
+2026-09-12 22:41:55,160 | INFO | api | REQUEST | id=f9c38594-05e3-4981-9c17-f937c043ee0f | method=GET | path=/openapi.json | client=127.0.0.1
+2026-09-12 22:41:55,166 | INFO | api | RESPONSE | id=f9c38594-05e3-4981-9c17-f937c043ee0f | method=GET | path=/openapi.json | status=200 | time=0.0057s
+2026-09-12 22:42:07,872 | INFO | api | REQUEST | id=c6f0d062-ee2f-4998-be89-da1d4626b1b9 | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:07,874 | INFO | api | RESPONSE | id=c6f0d062-ee2f-4998-be89-da1d4626b1b9 | method=GET | path=/expensive-operation | status=200 | time=0.0014s
+2026-09-12 22:42:10,086 | INFO | api | REQUEST | id=10394c1e-4d5c-4460-b4d5-1e81ef2a9694 | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:10,087 | INFO | api | RESPONSE | id=10394c1e-4d5c-4460-b4d5-1e81ef2a9694 | method=GET | path=/expensive-operation | status=200 | time=0.0010s
+2026-09-12 22:42:11,240 | INFO | api | REQUEST | id=826adbd6-42af-4346-bd1b-614f635cf678 | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:11,241 | INFO | api | RESPONSE | id=826adbd6-42af-4346-bd1b-614f635cf678 | method=GET | path=/expensive-operation | status=200 | time=0.0007s
+2026-09-12 22:42:12,160 | INFO | api | REQUEST | id=587625b5-cb17-42ea-a1d5-f2e3072b957f | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:12,162 | INFO | api | RESPONSE | id=587625b5-cb17-42ea-a1d5-f2e3072b957f | method=GET | path=/expensive-operation | status=200 | time=0.0011s
+2026-09-12 22:42:13,064 | INFO | api | REQUEST | id=bdca8aa4-cabb-472d-a9b3-e6ebd27d6084 | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:13,066 | INFO | api | RESPONSE | id=bdca8aa4-cabb-472d-a9b3-e6ebd27d6084 | method=GET | path=/expensive-operation | status=200 | time=0.0010s
+2026-09-12 22:42:13,634 | INFO | api | REQUEST | id=2895b8d9-d97e-46a9-99f5-9629f05d4de5 | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:13,635 | WARNING | slowapi | ratelimit 5 per 1 minute (127.0.0.1) exceeded at endpoint: /expensive-operation
+2026-09-12 22:42:13,636 | INFO | api | RESPONSE | id=2895b8d9-d97e-46a9-99f5-9629f05d4de5 | method=GET | path=/expensive-operation | status=429 | time=0.0021s
+2026-09-12 22:42:26,690 | INFO | api | REQUEST | id=07ae0956-42cd-4b52-97af-7d758842e26f | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:26,691 | WARNING | slowapi | ratelimit 5 per 1 minute (127.0.0.1) exceeded at endpoint: /expensive-operation
+2026-09-12 22:42:26,691 | INFO | api | RESPONSE | id=07ae0956-42cd-4b52-97af-7d758842e26f | method=GET | path=/expensive-operation | status=429 | time=0.0012s
+2026-09-12 22:42:26,869 | INFO | api | REQUEST | id=dd9c3953-d4ce-4f51-a56a-b5b9113a039d | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:26,870 | WARNING | slowapi | ratelimit 5 per 1 minute (127.0.0.1) exceeded at endpoint: /expensive-operation
+2026-09-12 22:42:26,871 | INFO | api | RESPONSE | id=dd9c3953-d4ce-4f51-a56a-b5b9113a039d | method=GET | path=/expensive-operation | status=429 | time=0.0020s
+2026-09-12 22:42:27,016 | INFO | api | REQUEST | id=ecf4c763-a9a8-481d-8364-71311a135356 | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:27,017 | WARNING | slowapi | ratelimit 5 per 1 minute (127.0.0.1) exceeded at endpoint: /expensive-operation
+2026-09-12 22:42:27,018 | INFO | api | RESPONSE | id=ecf4c763-a9a8-481d-8364-71311a135356 | method=GET | path=/expensive-operation | status=429 | time=0.0020s
+2026-09-12 22:42:27,181 | INFO | api | REQUEST | id=7e411793-3712-4c38-8810-dc051fe6180d | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:27,182 | WARNING | slowapi | ratelimit 5 per 1 minute (127.0.0.1) exceeded at endpoint: /expensive-operation
+2026-09-12 22:42:27,182 | INFO | api | RESPONSE | id=7e411793-3712-4c38-8810-dc051fe6180d | method=GET | path=/expensive-operation | status=429 | time=0.0015s
+2026-09-12 22:42:27,493 | INFO | api | REQUEST | id=4bca07c1-2ab0-4c34-8100-5602949aea6c | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:27,494 | WARNING | slowapi | ratelimit 5 per 1 minute (127.0.0.1) exceeded at endpoint: /expensive-operation
+2026-09-12 22:42:27,495 | INFO | api | RESPONSE | id=4bca07c1-2ab0-4c34-8100-5602949aea6c | method=GET | path=/expensive-operation | status=429 | time=0.0016s
+2026-09-12 22:42:27,691 | INFO | api | REQUEST | id=f2b366f5-913e-4945-b99b-e4430198d36c | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:27,692 | WARNING | slowapi | ratelimit 5 per 1 minute (127.0.0.1) exceeded at endpoint: /expensive-operation
+2026-09-12 22:42:27,692 | INFO | api | RESPONSE | id=f2b366f5-913e-4945-b99b-e4430198d36c | method=GET | path=/expensive-operation | status=429 | time=0.0013s
+2026-09-12 22:42:27,853 | INFO | api | REQUEST | id=bd480645-afaa-4891-bffa-f8f023de4d47 | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:27,856 | WARNING | slowapi | ratelimit 5 per 1 minute (127.0.0.1) exceeded at endpoint: /expensive-operation
+2026-09-12 22:42:27,857 | INFO | api | RESPONSE | id=bd480645-afaa-4891-bffa-f8f023de4d47 | method=GET | path=/expensive-operation | status=429 | time=0.0030s
+2026-09-12 22:42:28,018 | INFO | api | REQUEST | id=e14dbac1-3744-42ad-baee-36d22ce724bb | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:28,019 | WARNING | slowapi | ratelimit 5 per 1 minute (127.0.0.1) exceeded at endpoint: /expensive-operation
+2026-09-12 22:42:28,020 | INFO | api | RESPONSE | id=e14dbac1-3744-42ad-baee-36d22ce724bb | method=GET | path=/expensive-operation | status=429 | time=0.0016s
+2026-09-12 22:42:28,161 | INFO | api | REQUEST | id=89bcc0e1-5982-4ddf-85eb-d619ece9cadb | method=GET | path=/expensive-operation | client=127.0.0.1
+2026-09-12 22:42:28,162 | WARNING | slowapi | ratelimit 5 per 1 minute (127.0.0.1) exceeded at endpoint: /expensive-operation
+2026-09-12 22:42:28,163 | INFO | api | RESPONSE | id=89bcc0e1-5982-4ddf-85eb-d619ece9cadb | method=GET | path=/expensive-operation | status=429 | time=0.0026s
